@@ -5,9 +5,11 @@ public class FPSController : MonoBehaviour
     [Header("Movement")]
     public float walkSpeed = 5f;
     public float sprintSpeed = 8f;
-    public float accelerationTime = 0.5f; 
-    public float decelerationTime = 0.3f; 
+    public float accelerationTime = 0.5f;
+    public float decelerationTime = 0.3f;
     public float mouseSensitivity = 2f;
+    public float playerHeight = 1.8f;
+    public float cameraHeightRatio = 0.9f;
 
     [Header("Sprint Visual Effects")]
     public float sprintFOVIncrease = 10f;
@@ -32,12 +34,12 @@ public class FPSController : MonoBehaviour
     public float horizontalBobAmount = 0.05f;
     public float sprintHorizontalBobAmount = 0.08f;
     public float bobTransitionSpeed = 8f;
-    
+
     private CharacterController characterController;
     private Camera playerCamera;
     private float verticalRotation = 0f;
     private float idleTimer = 0f;
-    private float defaultCameraY = 0.6f;
+    private float defaultCameraY;
     private float bobTimer = 0f;
     private float currentBobMultiplier = 0f;
     private float currentBreathMultiplier = 1f;
@@ -60,6 +62,10 @@ public class FPSController : MonoBehaviour
         targetFOV = defaultFOV;
         currentSpeed = walkSpeed;
         targetSpeed = walkSpeed;
+
+        characterController.height = playerHeight;
+        characterController.center = new Vector3(0, playerHeight / 2f, 0);
+        defaultCameraY = playerHeight * cameraHeightRatio;
     }
 
     void Update()
@@ -98,8 +104,8 @@ public class FPSController : MonoBehaviour
 
         float speedRatio = Mathf.InverseLerp(walkSpeed, sprintSpeed, currentSpeed);
         bool shouldIncreaseFOV = currentSpeed > minSpeedForFOV && isMoving;
-        targetFOV = shouldIncreaseFOV ? 
-            Mathf.Lerp(defaultFOV, defaultFOV + sprintFOVIncrease, speedRatio) : 
+        targetFOV = shouldIncreaseFOV ?
+            Mathf.Lerp(defaultFOV, defaultFOV + sprintFOVIncrease, speedRatio) :
             defaultFOV;
     }
 
@@ -112,7 +118,7 @@ public class FPSController : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
-        
+
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
         playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
@@ -125,7 +131,7 @@ public class FPSController : MonoBehaviour
 
         float speedRatio = Mathf.InverseLerp(walkSpeed, sprintSpeed, currentSpeed);
         float breathMultiplier = Mathf.Lerp(1f, sprintBreathMultiplier, speedRatio);
-        
+
         float breathing = CalculateBreathing() * breathMultiplier;
         pos.y += breathing * currentBreathMultiplier;
 
@@ -172,7 +178,7 @@ public class FPSController : MonoBehaviour
         Vector3 bobPos = Vector3.zero;
         float vertAmount = Mathf.Lerp(verticalBobAmount, sprintVerticalBobAmount, speedRatio);
         float horizAmount = Mathf.Lerp(horizontalBobAmount, sprintHorizontalBobAmount, speedRatio);
-        
+
         bobPos.y = Mathf.Sin(bobTimer) * vertAmount;
         bobPos.x = Mathf.Cos(bobTimer * 0.5f) * horizAmount;
 
