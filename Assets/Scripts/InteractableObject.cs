@@ -7,18 +7,15 @@ public class InteractableObject : MonoBehaviour, Interactable
     
     public float InteractionDistance => interactionDistance;
 
-    public void OnInteract()
+    public virtual void OnInteract()
     {
-        Debug.Log($"Interacted with {gameObject.name}");
     }
 
-    public void OnFocus()
+    public virtual void OnFocus()
     {
-        Debug.Log($"Focusing on {gameObject.name}");
     }
 
-    public void OnLoseFocus()
+    public virtual void OnLoseFocus()
     {
-        Debug.Log($"Lost focus from {gameObject.name}");
     }
 }
