@@ -6,6 +6,8 @@ public class Outdoor : MonoBehaviour
 {
     public GameObject wallFirst;
     public GameObject wallSecond;
+    public GameObject[] openObjects;
+    public GameObject[] closeObjects;
     public GameObject colDelet;
 
     private void OnTriggerEnter(Collider other)
@@ -14,6 +16,15 @@ public class Outdoor : MonoBehaviour
         {
             wallFirst.SetActive(false);
             wallSecond.SetActive(true);
+            foreach (GameObject obj in openObjects)
+            {
+                obj.SetActive(true);
+            }
+            
+            foreach (GameObject obj in closeObjects)
+            {
+                obj.SetActive(false);
+            }
             Destroy(colDelet);
         }
     }
