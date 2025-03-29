@@ -1247,6 +1247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tablolar
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 022b7897e626f5645819ab55ffcb7481, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1453987653710054841, guid: 022b7897e626f5645819ab55ffcb7481, type: 3}
       propertyPath: m_LocalScale.x
       value: 110.307785
