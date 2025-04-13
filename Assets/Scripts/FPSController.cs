@@ -35,6 +35,14 @@ public class FPSController : MonoBehaviour
     public float sprintHorizontalBobAmount = 0.08f;
     public float bobTransitionSpeed = 8f;
 
+    [Header("Hallucination Effects")]
+    public bool useHallucinationSystem = true;
+    public float hallucinatedLookMultiplier = 0.5f;
+
+    [HideInInspector] public bool invertMouseX = false;
+    [HideInInspector] public bool invertMouseY = false;
+    [HideInInspector] public bool swapMovementKeys = false;
+
     private CharacterController characterController;
     private Camera playerCamera;
     private float verticalRotation = 0f;
@@ -52,11 +60,14 @@ public class FPSController : MonoBehaviour
     private float velocityChangeRate;
     private Vector3 currentVelocity;
     private bool isMoving;
+    private HallucinationSystem hallucinationSystem;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         playerCamera = GetComponentInChildren<Camera>();
+        hallucinationSystem = GetComponent<HallucinationSystem>();
+        
         Cursor.lockState = CursorLockMode.Locked;
         defaultFOV = playerCamera.fieldOfView;
         targetFOV = defaultFOV;
@@ -81,6 +92,23 @@ public class FPSController : MonoBehaviour
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
+        
+        if (swapMovementKeys)
+        {
+            moveX = -moveX;
+            moveZ = -moveZ;
+        }
+        
+        if (useHallucinationSystem && hallucinationSystem != null)
+        {
+            Vector2 hallucinationOffset = hallucinationSystem.GetHallucinationMovementOffset();
+            moveX += hallucinationOffset.x;
+            moveZ += hallucinationOffset.y;
+            
+            moveX = Mathf.Clamp(moveX, -1f, 1f);
+            moveZ = Mathf.Clamp(moveZ, -1f, 1f);
+        }
+        
         isMoving = (moveX != 0 || moveZ != 0);
 
         bool wantsToSprint = Input.GetKey(KeyCode.LeftShift) && isMoving;
@@ -118,6 +146,16 @@ public class FPSController : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        
+        if (invertMouseX) mouseX = -mouseX;
+        if (invertMouseY) mouseY = -mouseY;
+        
+        if (useHallucinationSystem && hallucinationSystem != null)
+        {
+            Vector2 hallucinationOffset = hallucinationSystem.GetHallucinationMovementOffset();
+            mouseX += hallucinationOffset.x * hallucinatedLookMultiplier;
+            mouseY += hallucinationOffset.y * hallucinatedLookMultiplier;
+        }
 
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);

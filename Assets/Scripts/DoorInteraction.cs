@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class DoorInteraction : InteractableObject
 {
@@ -6,8 +7,10 @@ public class DoorInteraction : InteractableObject
     [SerializeField] private string openAnimationTrigger = "Open";
     [SerializeField] private string closeAnimationTrigger = "Close";
     [SerializeField] private AudioSource doorSound;
+    [SerializeField] private float animationDuration = 4f;
     
     private bool isOpen = false;
+    private Collider doorCollider;
 
     private void Awake()
     {
@@ -20,10 +23,14 @@ public class DoorInteraction : InteractableObject
         {
             doorSound = audioSource;
         }
+        
+        doorCollider = GetComponent<Collider>();
     }
 
     public override void OnInteract()
     {
+        StartCoroutine(TemporarilyDisableCollision());
+        
         if (isOpen)
         {
             CloseDoor();
@@ -34,6 +41,18 @@ public class DoorInteraction : InteractableObject
         }
         
         isOpen = !isOpen;
+    }
+    
+    private IEnumerator TemporarilyDisableCollision()
+    {
+        if (doorCollider != null)
+        {
+            bool originalTriggerState = doorCollider.isTrigger;
+            doorCollider.isTrigger = true;
+            
+            yield return new WaitForSeconds(animationDuration);
+            doorCollider.isTrigger = originalTriggerState;
+        }
     }
     
     private void OpenDoor()
