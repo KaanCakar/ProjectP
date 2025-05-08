@@ -43,6 +43,9 @@ public class FPSController : MonoBehaviour
     [HideInInspector] public bool invertMouseY = false;
     [HideInInspector] public bool swapMovementKeys = false;
 
+    // Make currentSpeed public so FootstepSystem can access it
+    [HideInInspector] public float currentSpeed;
+
     private CharacterController characterController;
     private Camera playerCamera;
     private float verticalRotation = 0f;
@@ -55,18 +58,19 @@ public class FPSController : MonoBehaviour
     private Vector3 lastBobPosition = Vector3.zero;
     private float defaultFOV;
     private float targetFOV;
-    private float currentSpeed;
     private float targetSpeed;
     private float velocityChangeRate;
     private Vector3 currentVelocity;
     private bool isMoving;
     private HallucinationSystem hallucinationSystem;
+    private FootstepSystem footstepSystem;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         playerCamera = GetComponentInChildren<Camera>();
         hallucinationSystem = GetComponent<HallucinationSystem>();
+        footstepSystem = GetComponent<FootstepSystem>();
         
         Cursor.lockState = CursorLockMode.Locked;
         defaultFOV = playerCamera.fieldOfView;
@@ -221,5 +225,20 @@ public class FPSController : MonoBehaviour
         bobPos.x = Mathf.Cos(bobTimer * 0.5f) * horizAmount;
 
         return bobPos;
+    }
+    
+    public bool IsGrounded()
+    {
+        return characterController.isGrounded;
+    }
+    
+    public bool IsMoving()
+    {
+        return isMoving;
+    }
+    
+    public bool IsRunning()
+    {
+        return currentSpeed > (walkSpeed + 0.5f);
     }
 }
