@@ -4350,6 +4350,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Koridor_Duvar_K\u0131sa"
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 06d970dfb82a8d748a0f5625140537d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4083501151425157549, guid: 06d970dfb82a8d748a0f5625140537d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.15
