@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Emir İzzet Cansu - 2025
+/// This script manages the outdoor area interactions, including player look control and light sequences.
+/// </summary>
+
 public class Outdoor : MonoBehaviour
 {
     [SerializeField] private SequentialLights lightSequence;

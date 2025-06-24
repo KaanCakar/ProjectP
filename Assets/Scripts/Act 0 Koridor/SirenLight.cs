@@ -1,14 +1,11 @@
 using UnityEngine;
 
+/// <summary>
+/// Kaan ÇAKAR theanswer! - 2025
+/// SirenLight is a Unity component that simulates a rotating siren light with flickering effects.
+/// </summary>
 public class SirenLight : MonoBehaviour
 {
-
-    /// <summary>
-    /// Kaan ÇAKAR - 2025
-    /// SirenLight is a Unity component that simulates a rotating siren light with flickering effects.
-    /// </summary>
-
-
     [Header("Rotation Settings")]
     [Range(0f, 1000f)]
     public float rotationSpeed = 360f;

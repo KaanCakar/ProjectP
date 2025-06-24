@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Kaan ÇAKAR theanswer! - 2025
+/// This script manages the footstep sounds and surface detection for a first-person character.
+/// </summary>
+
 [System.Serializable]
 public class FootstepSurface
 {

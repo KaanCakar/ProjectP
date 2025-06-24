@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Kaan ÇAKAR theanswer! - 2025
+/// This script defines a CorridorChaser that follows the player when they are beyond a certain distance
+/// </summary>
+
 public class CorridorChaser : MonoBehaviour
 {
     public Transform target;
@@ -26,7 +31,7 @@ public class CorridorChaser : MonoBehaviour
             transform.position += direction * followSpeed * Time.deltaTime;
         }
     }
-    
+
     public void StopChasing()
     {
         // Optionally, you can disable the chaser or stop its movement

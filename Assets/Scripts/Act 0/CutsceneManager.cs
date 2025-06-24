@@ -3,6 +3,10 @@ using UnityEngine.Playables;
 using System.Collections.Generic;
 using System.Collections;
 
+/// <summary>
+/// Kaan ÇAKAR theanswer! - 2025
+/// CutsceneManager handles the playback of cutscenes using PlayableDirector.
+/// </summary>
 public class CutsceneManager : MonoBehaviour
 {
     private static CutsceneManager instance;
@@ -26,7 +30,7 @@ public class CutsceneManager : MonoBehaviour
         public Camera cutsceneCamera;
         [Header("Player Object")]
         public bool disablePlayerObject = false;
-        public bool enablePlayerAfterCutscene = false; 
+        public bool enablePlayerAfterCutscene = false;
         [Header("Fade Settings")]
         public bool fadeAtStart = true;
         public bool fadeAtEnd = true;
@@ -164,7 +168,7 @@ public class CutsceneManager : MonoBehaviour
 
             currentCutscene.cutsceneCamera.gameObject.SetActive(true);
         }
-        
+
         if (currentCutscene.resetPlayerPosition &&
             currentCutscene.playerStartPosition != null &&
             playerController != null)
@@ -194,17 +198,17 @@ public class CutsceneManager : MonoBehaviour
     {
         fadeCanvasGroup.alpha = 1f;
         yield return new WaitForSeconds(0.2f);
-        
+
         float startTime = Time.time;
         float endTime = startTime + duration;
-        
+
         while (Time.time < endTime)
         {
             float t = (Time.time - startTime) / duration;
             fadeCanvasGroup.alpha = 1f - t;
             yield return null;
         }
-        
+
         fadeCanvasGroup.alpha = 0f;
         currentCutscene.timelineDirector.Play();
     }
@@ -217,7 +221,7 @@ public class CutsceneManager : MonoBehaviour
             StartCoroutine(FadeOutAndFinishCutscene());
             return;
         }
-        
+
         CompleteCutscene();
     }
 
@@ -225,14 +229,14 @@ public class CutsceneManager : MonoBehaviour
     {
         float startTime = Time.time;
         float endTime = startTime + currentCutscene.fadeDuration;
-        
+
         while (Time.time < endTime)
         {
             float t = (Time.time - startTime) / currentCutscene.fadeDuration;
             fadeCanvasGroup.alpha = t;
             yield return null;
         }
-        
+
         fadeCanvasGroup.alpha = 1f;
         CompleteCutscene();
     }
@@ -310,17 +314,17 @@ public class CutsceneManager : MonoBehaviour
     private IEnumerator FinalFadeOut(float duration)
     {
         yield return new WaitForSeconds(0.2f);
-        
+
         float startTime = Time.time;
         float endTime = startTime + duration;
-        
+
         while (Time.time < endTime)
         {
             float t = (Time.time - startTime) / duration;
             fadeCanvasGroup.alpha = 1f - t;
             yield return null;
         }
-        
+
         fadeCanvasGroup.alpha = 0f;
     }
 
@@ -392,37 +396,37 @@ public class CutsceneManager : MonoBehaviour
     }
 
     private IEnumerator FadeAndResetPosition(CutsceneData cutscene, string cutsceneID, bool ignorePlayOnce)
-{
-    float startTime = Time.time;
-    float endTime = startTime + cutscene.fadeDuration;
-
-    while (Time.time < endTime)
     {
-        float t = (Time.time - startTime) / cutscene.fadeDuration;
-        fadeCanvasGroup.alpha = t;
-        yield return null;
+        float startTime = Time.time;
+        float endTime = startTime + cutscene.fadeDuration;
+
+        while (Time.time < endTime)
+        {
+            float t = (Time.time - startTime) / cutscene.fadeDuration;
+            fadeCanvasGroup.alpha = t;
+            yield return null;
+        }
+
+        fadeCanvasGroup.alpha = 1f;
+
+        Transform playerTransform = playerController.transform;
+        playerTransform.position = cutscene.playerStartPosition.position;
+        playerTransform.rotation = cutscene.playerStartPosition.rotation;
+
+        PlayCutscene(cutsceneID, ignorePlayOnce);
+
+        yield return new WaitForSeconds(0.2f);
+
+        startTime = Time.time;
+        endTime = startTime + cutscene.fadeDuration;
+
+        while (Time.time < endTime)
+        {
+            float t = (Time.time - startTime) / cutscene.fadeDuration;
+            fadeCanvasGroup.alpha = 1f - t;
+            yield return null;
+        }
+
+        fadeCanvasGroup.alpha = 0f;
     }
-
-    fadeCanvasGroup.alpha = 1f;
-
-    Transform playerTransform = playerController.transform;
-    playerTransform.position = cutscene.playerStartPosition.position;
-    playerTransform.rotation = cutscene.playerStartPosition.rotation;
-
-    PlayCutscene(cutsceneID, ignorePlayOnce);
-
-    yield return new WaitForSeconds(0.2f);
-
-    startTime = Time.time;
-    endTime = startTime + cutscene.fadeDuration;
-
-    while (Time.time < endTime)
-    {
-        float t = (Time.time - startTime) / cutscene.fadeDuration;
-        fadeCanvasGroup.alpha = 1f - t;
-        yield return null;
-    }
-
-    fadeCanvasGroup.alpha = 0f;
-}
 }

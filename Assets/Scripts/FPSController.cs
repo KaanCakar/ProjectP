@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// Kaan ÇAKAR theanswer! - 2025
+/// This script controls the first-person shooter character's movement, camera look, and various gameplay mechanics
+/// </summary>
+
 public class FPSController : MonoBehaviour
 {
     [Header("Movement")]
@@ -71,7 +76,7 @@ public class FPSController : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         hallucinationSystem = GetComponent<HallucinationSystem>();
         footstepSystem = GetComponent<FootstepSystem>();
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         defaultFOV = playerCamera.fieldOfView;
         targetFOV = defaultFOV;
@@ -96,23 +101,23 @@ public class FPSController : MonoBehaviour
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
-        
+
         if (swapMovementKeys)
         {
             moveX = -moveX;
             moveZ = -moveZ;
         }
-        
+
         if (useHallucinationSystem && hallucinationSystem != null)
         {
             Vector2 hallucinationOffset = hallucinationSystem.GetHallucinationMovementOffset();
             moveX += hallucinationOffset.x;
             moveZ += hallucinationOffset.y;
-            
+
             moveX = Mathf.Clamp(moveX, -1f, 1f);
             moveZ = Mathf.Clamp(moveZ, -1f, 1f);
         }
-        
+
         isMoving = (moveX != 0 || moveZ != 0);
 
         bool wantsToSprint = Input.GetKey(KeyCode.LeftShift) && isMoving;
@@ -150,10 +155,10 @@ public class FPSController : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
-        
+
         if (invertMouseX) mouseX = -mouseX;
         if (invertMouseY) mouseY = -mouseY;
-        
+
         if (useHallucinationSystem && hallucinationSystem != null)
         {
             Vector2 hallucinationOffset = hallucinationSystem.GetHallucinationMovementOffset();
@@ -226,17 +231,17 @@ public class FPSController : MonoBehaviour
 
         return bobPos;
     }
-    
+
     public bool IsGrounded()
     {
         return characterController.isGrounded;
     }
-    
+
     public bool IsMoving()
     {
         return isMoving;
     }
-    
+
     public bool IsRunning()
     {
         return currentSpeed > (walkSpeed + 0.5f);

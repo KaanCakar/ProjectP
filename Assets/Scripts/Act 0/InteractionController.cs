@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Kaan ÇAKAR theanswer! - 2025
+/// InteractionController manages player interactions with interactable objects in the game world.
+/// </summary>
 public class InteractionController : MonoBehaviour
 {
     [Header("Interaction Settings")]
@@ -34,7 +38,7 @@ public class InteractionController : MonoBehaviour
         if (Physics.Raycast(playerCamera.ViewportPointToRay(screenCenter), out RaycastHit hit, rayDistance, interactableLayer))
         {
             Interactable interactable = hit.collider.GetComponent<Interactable>();
-            
+
             if (interactable != null && hit.distance <= interactable.InteractionDistance)
             {
                 if (currentInteractable != interactable)

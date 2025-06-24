@@ -1,5 +1,10 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+
+/// <summary>
+/// Kaan ÇAKAR theanswer! - 2025
+/// RoomLamp is a component that simulates a flickering lamp in a room.
+/// </summary>
 public class RoomLamp : MonoBehaviour
 {
     [Header("Light Settings")]
@@ -70,7 +75,7 @@ public class RoomLamp : MonoBehaviour
         {
             float flickerIntensity = Random.Range(minFlickerIntensity, maxFlickerIntensity);
             mainLight.intensity = flickerIntensity;
-            
+
             if (lensFlare != null)
             {
                 lensFlare.intensity = Random.Range(0.5f, 1.5f);
@@ -83,7 +88,7 @@ public class RoomLamp : MonoBehaviour
         else
         {
             mainLight.intensity = originalIntensity;
-            
+
             if (lensFlare != null)
             {
                 lensFlare.intensity = 1f;
