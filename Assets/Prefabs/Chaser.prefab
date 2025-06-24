@@ -4858,6 +4858,7 @@ GameObject:
   - component: {fileID: 8643809675196903610}
   - component: {fileID: 9144051689008565821}
   - component: {fileID: 816983773491811417}
+  - component: {fileID: 7472809698340976989}
   m_Layer: 0
   m_Name: ChaserSprite
   m_TagString: Untagged
@@ -4953,3 +4954,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &7472809698340976989
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6182568459666719275}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.0000005, y: 6.000001, z: 0.2}
+  m_Center: {x: 0, y: 0.00000047683716, z: 0}
